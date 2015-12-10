@@ -41,4 +41,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Travis
 
-Ver el estado de Travias: [![Build Status]https://travis-ci.org/alu0100769579/prct09]
+Ver el estado de Travias: [![Build Status]https://travis-ci.org/alu0100769579/prct10]
