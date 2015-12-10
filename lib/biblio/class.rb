@@ -58,7 +58,7 @@ class Book < Libro
 	end
 	def to_s
 			string=""
-			string  << @autor << " (" << Date::MONTHNAMES[publicacion.month] << " " << publicacion.day.to_s << ", " << publicacion.year.to_s << "). " << @titulo << " (" << @edicion.to_s << ") (" << @volumen.to_s << "). " << @editorial << "."
+			string  << @autor << " (" << @publicacion << "). " << @titulo << " (" << @edicion.to_s << ") (" << @volumen.to_s << "). " << @editorial << "."
 	end
 end
 
@@ -68,14 +68,14 @@ class Periodico < Libro
 	
 	def initialize(autor, titulo, editorial, publicacion, paginas)
 		formato = "Papel"
-		super(autor,titulo,editorial,publicacion,formato)
+		super(autor,titulo,editorial,publicacion)
 	
 			@paginas = paginas
 	end
 	
 	def to_s
 		string = ""
-		string << @autor << " (" << Date::MONTHNAMES[publicacion.month] << " " << publicacion.day.to_s << ", " << publicacion.year.to_s << "). " << @titulo << ". " << @editorial << ", pp. " << @paginas.to_s << "."
+		string << @autor << " (" << @publicacion << "). " << @titulo << ". " << @editorial << ", pp. " << @paginas.to_s << "."
 	end
 end
 
@@ -86,7 +86,8 @@ class Elec_Document < Libro
 	attr_accessor :formato, :url, :fechacceso
 	
 	def initialize(autor, titulo, editorial, edicion, publicacion, formato, url, fechacceso)
-		super(autor,titulo,editorial,publicacion, formato)
+		super(autor,titulo,editorial,publicacion)
+		@formato = formato
 		@url = url
 		@fechacceso = fechacceso
 		@edicion = edicion
@@ -94,6 +95,6 @@ class Elec_Document < Libro
 		
 	def to_s
 		string = ""
-		string << @autor << " (" << Date::MONTHNAMES[publicacion.month] << " " << publicacion.day.to_s << ", " << publicacion.year.to_s << "). " << @titulo << @formato << ". " << @editorial << ": " << @edicion << ". Disponible en: " << @url << " (" << Date::MONTHNAMES[fechacceso.month] << " " << fechacceso.day.to_s << ", " << fechacceso.year.to_s << "). "
+		string << @autor << " (" << @publicacion << "). " << @titulo << @formato << ". " << @editorial << ": " << @edicion << ". Disponible en: " << @url << " (" << @fechacceso << "). "
 	end
 end

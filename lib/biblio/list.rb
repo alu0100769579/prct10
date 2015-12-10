@@ -107,11 +107,11 @@ class Lista_doble
 		cambio = true
 		while cambio
 			cambio = false
-			i = @inicio
-			i_1 = @inicio.next
+			i = @head
+			i_1 = @head.next
 			while i_1 != nil
 				if(i.value > i_1.value)
-					i.value, i_1.valor = i_1.valor, i.valor
+					i.value, i_1.value = i_1.value, i.value
 					cambio = true
 				end
 				i = i_1
@@ -121,10 +121,10 @@ class Lista_doble
    end
 	
 	def to_s
-		actual = @inicio
+		actual = @head
 		cadena = "|"
 			while !actual.nil?
-				cadena << actual.valor.to_s
+				cadena << actual.value.to_s
 
 				if !actual.next.nil?
 					cadena << ", "
@@ -137,9 +137,9 @@ class Lista_doble
 	end
 	
 	def each (&block)
-		copia = @inicio
+		copia = @head
 		while !copia.nil?
-			block.call(copia.valor)
+			block.call(copia.value)
 			copia = copia.next
 		end
 	end
