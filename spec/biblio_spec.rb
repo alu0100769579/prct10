@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'biblio'
-
+=begin
 describe Libro do
 	before :each do
 		@libro1 = Book.new(["Dave Thomas","Andy Hunt","Chad Fowler"], "The pragmatic programmers guide", "the facets of ruby", "Pragmatic Bookshelf", "4 edition", "2013,7,7", ["isbn-13: 978-1937785499","isbn-10: 19937785491"])
@@ -323,3 +323,5 @@ describe Libro do
 	end
 
 end
+
+=end

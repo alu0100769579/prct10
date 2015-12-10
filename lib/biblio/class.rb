@@ -2,18 +2,44 @@ class Libro
 	
 		include Comparable
 		
-		attr_accessor :autor, :titulo, :serie, :editorial, :edicion, :publicacion
-		def initialize(autor, titulo, serie, editorial, edicion, publicacion)
-			@autor = autor
-			@titulo = titulo
-			@serie = serie
+		attr_accessor :autor, :titulo, :editorial, :publicacion
+		def initialize(autor, titulo, editorial, publicacion)
+			
 			@editorial = editorial
-			@edicion = edicion
 			@publicacion = publicacion
+			
+			str=""
+			autor.each do |a|
+				separar = a.split(/\W+/)
+				str+=separar[1]
+				str+=", "
+				unless separar[2].nil?
+					str+=separar[2][0]
+					str+=". "
+				end
+				str+=separar[0][0]
+				str+="."
+				str+=" & " unless a == autor.last
+			end
+			
+			@autor = str
+			
+			tit = titulo.split(' ')
+			tit.each do |word|
+				if word.length > 3
+					word.capitalize!
+				else
+					word.downcase!
+				end
+				if word == tit[0]
+					word.capitalize!
+				end
+			end
+
+			@titulo = tit.join(' ')
+			
 		end
-		def to_s
-		    "#{@autor}\n#{@titulo}\n#{@serie}\n#{@editorial}; #{@edicion} (#{@publicacion})\n"
-		end
+		
 		
 		def <=> (other)
 			
@@ -22,47 +48,34 @@ class Libro
 end
 
 class Book < Libro
-	attr_accessor :isbn
+	attr_accessor :edicion, :volumen
 	
-	def initialize(autor, titulo, serie, editorial, edicion, publicacion, isbn)
+	def initialize(autor, titulo, editorial, publicacion, edicion, volumen)
 		
-		super :autor,:titulo, :serie, :editorial, :edicion, :publicacion
-	
-			@autor = autor
-			@titulo = titulo
-			@serie = serie
-			@editorial = editorial
+		super(autor,titulo,editorial,publicacion)
 			@edicion = edicion
-			@publicacion = publicacion
-			@isbn = isbn
+			@volumen = volumen
 	end
 	def to_s
-		
-		super :autor,:titulo, :serie, :editorial, :edicion, :publicacion
-	
-		"#{@autor}\n#{@titulo}\n#{@serie}\n#{@editorial}; #{@edicion} (#{@publicacion})\n#{@isbn}"
+			string=""
+			string  << @autor << " (" << Date::MONTHNAMES[publicacion.month] << " " << publicacion.day.to_s << ", " << publicacion.year.to_s << "). " << @titulo << " (" << @edicion.to_s << ") (" << @volumen.to_s << "). " << @editorial << "."
 	end
 end
 
-class Magazine < Libro
+class Periodico < Libro
 	
-	attr_accessor :issn
+	attr_accessor :paginas, :formato
 	
-	def initialize(autor, titulo, serie, editorial, edicion, publicacion, issn)
-		super :autor,:titulo, :serie, :editorial, :edicion, :publicacion
+	def initialize(autor, titulo, editorial, publicacion, paginas)
+		formato = "Papel"
+		super(autor,titulo,editorial,publicacion,formato)
 	
-			@autor = autor
-			@titulo = titulo
-			@serie = serie
-			@editorial = editorial
-			@edicion = edicion
-			@publicacion = publicacion
-			@issn = issn
+			@paginas = paginas
 	end
-	def to_s
-		super :autor,:titulo, :serie, :editorial, :edicion, :publicacion
 	
-		"#{@autor}\n#{@titulo}\n#{@serie}\n#{@editorial}; #{@edicion} (#{@publicacion})\n#{@issn}"
+	def to_s
+		string = ""
+		string << @autor << " (" << Date::MONTHNAMES[publicacion.month] << " " << publicacion.day.to_s << ", " << publicacion.year.to_s << "). " << @titulo << ". " << @editorial << ", pp. " << @paginas.to_s << "."
 	end
 end
 
@@ -70,22 +83,17 @@ end
 
 class Elec_Document < Libro
 	
-	attr_accessor :url
+	attr_accessor :formato, :url, :fechacceso
 	
-	def initialize(autor, titulo, serie, editorial, edicion, publicacion, url)
-		super :autor,:titulo, :serie, :editorial, :edicion, :publicacion
-		
-			@autor = autor
-			@titulo = titulo
-			@serie = serie
-			@editorial = editorial
-			@edicion = edicion
-			@publicacion = publicacion
-			@url = url
+	def initialize(autor, titulo, editorial, edicion, publicacion, formato, url, fechacceso)
+		super(autor,titulo,editorial,publicacion, formato)
+		@url = url
+		@fechacceso = fechacceso
+		@edicion = edicion
 	end
+		
 	def to_s
-		super :autor,:titulo, :serie, :editorial, :edicion, :publicacion
-	
-		"#{@autor}\n#{@titulo}\n#{@serie}\n#{@editorial}; #{@edicion} (#{@publicacion})\n#{@url}"
+		string = ""
+		string << @autor << " (" << Date::MONTHNAMES[publicacion.month] << " " << publicacion.day.to_s << ", " << publicacion.year.to_s << "). " << @titulo << @formato << ". " << @editorial << ": " << @edicion << ". Disponible en: " << @url << " (" << Date::MONTHNAMES[fechacceso.month] << " " << fechacceso.day.to_s << ", " << fechacceso.year.to_s << "). "
 	end
 end

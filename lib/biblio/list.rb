@@ -103,5 +103,46 @@ class Lista_doble
        end
    end
    
-    
+   def ordenar! 
+		cambio = true
+		while cambio
+			cambio = false
+			i = @inicio
+			i_1 = @inicio.next
+			while i_1 != nil
+				if(i.value > i_1.value)
+					i.value, i_1.valor = i_1.valor, i.valor
+					cambio = true
+				end
+				i = i_1
+				i_1 = i_1.next
+			end
+		end
+   end
+	
+	def to_s
+		actual = @inicio
+		cadena = "|"
+			while !actual.nil?
+				cadena << actual.valor.to_s
+
+				if !actual.next.nil?
+					cadena << ", "
+				end
+
+				actual = actual.next
+			end
+		cadena << "|"
+		return cadena
+	end
+	
+	def each (&block)
+		copia = @inicio
+		while !copia.nil?
+			block.call(copia.valor)
+			copia = copia.next
+		end
+	end
+   
+
 end
